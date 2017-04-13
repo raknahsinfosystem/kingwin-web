@@ -22,20 +22,51 @@
 	float : none;
 	background-color: #00a65a;
 }
+.bg-img{
+	background-image : url(../../images/bg.jpg);
+	background-size: 100% 100%;
+}
+body *{
+	background: transparent;
+	/* background-size: 100% 100%; */
+}
+.bg-trans{
+	background: transparent !important;
+}
+html,body{
+	background : url(../../images/bg.jpg);
+}
+html,body{
+	background-size: 100% 100%;
+}
+@media (min-width: 768px)
+{
+	.containerCom{
+		margin-left: 0%;
+	    /* border: 12px solid #333; */
+	    box-shadow: 0px 0px 10px 6px #999;
+	}
+}
+.btn{
+	background-color: #743d77 !important;
+}
+.btn * {
+	color : white;
+}
 /* .btn-primary-green{
 
 } */
 </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
-	<div class="wrapper">
-		<section class="content col-sm-8 col-md-6 col-lg-6 col-xs-12">
+	<div class="wrapper bg-trans">
+		<section class="content bg-trans bg-img col-sm-8 col-md-6 col-lg-6 col-xs-12">
 
       <!-- SELECT2 EXAMPLE -->
-      <div class="box box-default pwd-setting">
+      <div class="box box-default pwd-setting containerCom">
         <div class="box-header with-border">
-          <h3 class="box-title">Password Settings</h3>
-
+          <img src="../../images/logo.jpg" alt="logo" style="width:100%;max-height:120px;">
+          <h3 class="box-title">Material Upload</h3>
           <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
@@ -80,10 +111,10 @@
                </div>
                <div class="form-group">
                  <label for="material_fileUpload">Upload File</label>
-                 <button class="btn btn-primary">
-                 	<input type="file" class="form-control" id="material_fileUpload" placeholder="Select File">
-                 	Upload File
-                 </button>
+                 <div class="fileinput fileinput-new" data-provides="fileinput">
+				    <span class="btn btn-default btn-file"><span>Choose file</span><input type="file" /></span>
+				    <span class="fileinput-filename"></span><span class="fileinput-new">No file chosen</span>
+				</div>
                </div>
                <div class="form-group pull-right col-lg-8 col-md-8 col-xs-9 col-sm-8">
                	 <button class="btn btn-primary"><i class="fa fa-fw fa-thumbs-o-up"></i>Submit</button>

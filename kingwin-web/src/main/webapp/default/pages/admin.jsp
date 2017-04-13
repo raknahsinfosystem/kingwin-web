@@ -19,16 +19,42 @@
     background-repeat: no-repeat;
     background-position: center;
 }
+body *{
+	background: transparent;
+	/* background-size: 100% 100%; */
+}
+.bg-trans{
+	background: transparent !important;
+}
+html,body{
+	background : url(../../images/bg.jpg);
+}
+html,body{
+	background-size: 100% 100%;
+}
+.btn{
+	background-color: #743d77 !important;
+}
+body *{
+	color : white;
+}
+@media (min-width: 768px)
+{
+	.container{
+		margin-left: 0%;
+	    border: 12px solid #333;
+	    box-shadow: 0px 0px 10px 6px #999;
+	}
+}
 </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
-	<div class="wrapper">
-		<div class="content-wrapper" style="margin-left: 0%;">
+	<div class="col-md-3"></div>
+	<div class="wrapper bg-trans col-md-6 container">
+		<div class="content-wrapper bg-trans bg-img" style="margin-left: 0%;">
 			<section class="content-header">
-		      <h1>
-		        KING WIN ACADEMIC
-		        <small>Control panel</small>
-		      </h1>
+				<img src="../../images/logo.jpg" alt="logo" style="width:100%;max-height:120px;">		        
+		        <h4>Dashboard</h4>
 		      <ol class="breadcrumb">
 		        <!-- <li><a href="#" style="font-size: large;"><i class="fa fa-dashboard"></i>KING WIN ACADEMIC</a></li>
 		        <li class="active">Dashboard</li>
@@ -37,7 +63,7 @@
 		    <section class="content">
 		      <!-- Small boxes (Stat box) -->
 		      <div class="row">
-				  <div class="col-lg-2 col-xs-4 col-md-3">
+				  <div class="col-lg-3 col-xs-4 col-md-3">
 			          <!-- small box -->
 			          <div class="small-box bg-green">
 			            <div class="inner" style="background-image: url(../../images/admin-icon.png);">
@@ -55,7 +81,7 @@
 			            <a href="#" class="small-box-footer">Admin <i class="fa fa-arrow-circle-right"></i></a>
 			          </div>
 		        </div>
-		        <div class="col-lg-2 col-xs-4 col-md-3">
+		        <div class="col-lg-3 col-xs-4 col-md-3">
 			          <!-- small box -->
 			          <div class="small-box bg-red">
 			            <div class="inner" style="background-image: url(../../images/staff-icon.png);">
@@ -73,7 +99,7 @@
 			            <a href="#" class="small-box-footer">Staff <i class="fa fa-arrow-circle-right"></i></a>
 			          </div>
 		        </div>
-		        <div class="col-lg-2 col-xs-4 col-md-3">
+		        <div class="col-lg-3 col-xs-4 col-md-3">
 			          <!-- small box -->
 			          <div class="small-box" style="background-color: #337ab7 !important;">
 			            <div class="inner" style="background-image: url(../../images/category-icon.png);">
@@ -91,7 +117,7 @@
 			            <a href="#" class="small-box-footer">All Categories <i class="fa fa-arrow-circle-right"></i></a>
 			          </div>
 		        </div>
-		        <div class="col-lg-2 col-xs-4 col-md-3">
+		        <div class="col-lg-3 col-xs-4 col-md-3">
 			          <!-- small box -->
 			          <div class="small-box" style="background-color: #605ca8 !important;">
 			            <div class="inner" style="background-image: url(../../images/syllabus-icon.png);">
@@ -109,7 +135,7 @@
 			            <a href="#" class="small-box-footer">Syllabus <i class="fa fa-arrow-circle-right"></i></a>
 			          </div>
 		        </div>
-		        <div class="col-lg-2 col-xs-4 col-md-3">
+		        <div class="col-lg-3 col-xs-4 col-md-3">
 			          <!-- small box -->
 			          <div class="small-box bg-yellow">
 			            <div class="inner" style="background-image: url(../../images/Q&A-icon.png);">
@@ -127,7 +153,7 @@
 			            <a href="#" class="small-box-footer">Q&A <i class="fa fa-arrow-circle-right"></i></a>
 			          </div>
 		        </div>
-		        <div class="col-lg-2 col-xs-4 col-md-3">
+		        <div class="col-lg-3 col-xs-4 col-md-3">
 			          <!-- small box -->
 			          <div class="small-box bg-red">
 			            <div class="inner" style="background-image: url(../../images/material-icon.png);">

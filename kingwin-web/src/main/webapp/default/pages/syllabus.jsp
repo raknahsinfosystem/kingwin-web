@@ -24,18 +24,56 @@
 	float : none;
 	background-color: #00a65a;
 }
+body *{
+	background: transparent;
+	/* background-size: 100% 100%; */
+}
+.bg-trans{
+	background: transparent !important;
+}
+html,body{
+	background : url(../../images/bg.jpg);
+}
+html,body{
+	background-size: 100% 100%;
+}
+@media (min-width: 768px)
+{
+	.containerCom{
+		margin-left: 0%;
+	    /* border: 12px solid #333; */
+	    box-shadow: 0px 0px 10px 6px #999;
+	}
+}
+.btn{
+	background-color: #743d77 !important;
+}
+/* body *{
+	color : white;
+} */
+.btn{
+	background-color: #743d77 !important;
+}
+.paginate_button.active a{
+	background-color: #743d77 !important;
+}
+.btn * {
+	color : white;
+}
+
 /* .btn-primary-green{
 
 } */
 </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
-	<div class="wrapper">
-		<section class="content col-sm-8 col-md-8 col-lg-6 col-xs-12">
+	<div class="wrapper bg-trans">
+		<section class="content bg-trans bg-img col-sm-8 col-md-8 col-lg-6 col-xs-12">
 
       <!-- SELECT2 EXAMPLE -->
-      <div class="box box-default pwd-setting">
+      <div class="box box-default pwd-setting containerCom">
         <div class="box-header with-border">
+        <img src="../../images/logo.jpg" alt="logo" style="width:100%;max-height:120px;">
           <h3 class="box-title">Syllabus View</h3>
 
           <div class="box-tools pull-right">

@@ -8,21 +8,23 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Login form using Material Design - Demo by W3lessons</title>
   <!-- CORE CSS-->
-  
+  <link rel="stylesheet" href="../../plugins/bootstrap/css/bootstrap.min.css">  
   <link rel="stylesheet" href="../../css/materialize.css">
   <!-- <link rel="stylesheet" href="../../plugins/bootstrap/css/bootstrap.css"> -->
 
 <style type="text/css">
-html,
-body {
+html {
 	height: 100%;
-	background: url(../../images/bg.png) repeat !important;
+	background: url(../../images/bg.jpg) !important;
+	background-size: 100% 100%;
 	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 	font-weight:300;
 	text-align: left;
 	text-decoration: none;
 }
-
+body{
+	background : transparent;
+}
 html {
     display: table;
     margin: auto;
@@ -38,23 +40,23 @@ body {
   
 </head>
 
-<body class="" >
+<body class="" style="display: table-cell;vertical-align: middle;" >
 
-
-  <div id="login-page" class="row">
+  <div class="col-md-3"></div>
+  <div id="login-page" class="row col-md-6 col-lg-6">
     <div class="col s12 z-depth-6 card-panel">
       <form class="login-form">
         <div class="row">
           <div class="input-field col s12 center">
-            <img src="http://w3lessons.info/logo.png" alt="" class="responsive-img valign profile-image-login">
-            <p class="center login-form-text">W3lessons - Material Design Login Form</p>
+            <img src="../../images/logo.jpg" alt="" class="responsive-img valign profile-image-login">
+            <!-- <p class="center login-form-text">W3lessons - Material Design Login Form</p> -->
           </div>
         </div>
         <div class="row margin">
           <div class="input-field col s12">
             <i class="mdi-social-person-outline prefix"></i>
             <input class="validate" id="email" type="email">
-            <label for="email"  class="center-align">Email</label>
+            <label for="email"  class="center-align">UserName</label>
           </div>
         </div>
         <div class="row margin">
@@ -71,21 +73,21 @@ body {
           </div>
         </div>
         <div class="row">
-          <button class="btn btn-default" style="margin-left: 19%;">
+          <button class="btn btn-default" style="margin-left: 29%;">
           	Login
           </button>
           <!-- <div class="input-field col s12">
             <a href="login.html" class="btn waves-effect waves-light col s12">Login</a>
           </div> -->
         </div>
-        <div class="row">
+        <!-- <div class="row">
           <div class="input-field col s6 m6 l6">
             <p class="margin medium-small"><a href="register.html">Register Now!</a></p>
           </div>
           <div class="input-field col s6 m6 l6">
               <p class="margin right-align medium-small"><a href="forgot-password.html">Forgot password?</a></p>
           </div>          
-        </div>
+        </div> -->
 
       </form>
     </div>
@@ -111,7 +113,9 @@ Post Page - Responsive
     ================================================ -->
 
   <!-- jQuery Library -->
+  
  <script type="text/javascript" src="../../plugins/jquery/jquery.min.js"></script>
+ <script src="../../plugins/bootstrap/js/bootstrap.js"></script>
  <!-- <script type="text/javascript" src="../../plugins/bootstrap/js/bootstrap.js"> -->
   <!--materialize js-->
   <script src="../../js/materialize.js"></script>
