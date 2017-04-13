@@ -43,7 +43,7 @@ body *{
 	.container{
 		margin-left: 0%;
 	    border: 12px solid #333;
-	    box-shadow: 0px 0px 10px 6px #999;
+	    box-shadow: 0px 15px 11px 5px #999;
 	}
 }
 </style>
