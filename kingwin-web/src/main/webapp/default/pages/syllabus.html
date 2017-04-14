@@ -1,7 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<!-- <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%> -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<html ng-app="eBook-app">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Syllabus View</title>
@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="../../plugins/adminLTE/css/skins/_all-skins.css">
 <link rel="stylesheet" href="../../plugins/select2/select2.css">
 <link rel="stylesheet" href="../../plugins/datatables/css/dataTables.bootstrap.css">
+<link rel="stylesheet" href="../../css/com.css">
 <!-- <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.0.2/css/responsive.dataTables.min.css"> -->
 <style type="text/css">
 .pwd-setting{
@@ -45,6 +46,13 @@ html,body{
 	    box-shadow: 0px 0px 10px 6px #999;
 	}
 }
+@media (min-width: 650px)
+{
+	.add-button-kingweb{
+		width: 41.66666667%;
+		float : left;
+	}
+}
 .btn{
 	background-color: #743d77 !important;
 }
@@ -60,13 +68,17 @@ html,body{
 .btn * {
 	color : white;
 }
+.btn-danger{
+	background-color: #dd4b39 !important;
+    border-color: #d73925;
+}
 
 /* .btn-primary-green{
 
 } */
 </style>
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini" ng-controller="eBook-ctrl">
 	<div class="wrapper bg-trans">
 		<section class="content bg-trans bg-img col-sm-8 col-md-8 col-lg-6 col-xs-12">
 
@@ -74,12 +86,12 @@ html,body{
       <div class="box box-default pwd-setting containerCom">
         <div class="box-header with-border">
         <img src="../../images/logo.jpg" alt="logo" style="width:100%;max-height:120px;">
-          <h3 class="box-title">Syllabus View</h3>
+          <h3 class="box-title">{{eBookType.toUpperCase()}} VIEW</h3>
 
-          <div class="box-tools pull-right">
+          <!-- <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
-          </div>
+          </div> -->
         </div>
         <!-- /.box-header -->
         <div class="box-body">
@@ -89,17 +101,20 @@ html,body{
             	<div class="container" style="padding:0%;width: 100%;">
 				  <!-- <h2>Dynamic Tabs</h2> -->
 				  <ul class="nav nav-tabs">
-				    <li class="active"><a data-toggle="tab" href="#syllabus_viewMenu">View Syllabus</a></li>
-				    <li><a data-toggle="tab" href="#syllabus_editMenu">Create/Edit Syllabus</a></li>
+				    <li class="active"><a data-toggle="tab" href="#view_eBook_cont">View Syllabus</a></li>
+				    <li><a data-toggle="tab" id="editEBook" href="#edit_EBook_cont">Create/Edit Syllabus</a></li>
+				    <div class="col-md-5 col-lg-5 add-button-kingweb"></div>
+				    <div class="col-md-2 col-lg-2 col-xs-2" style="margin-left: -4%;margin-top: 2%;">
+						<button class="btn btn-success" ng-click="addEBook();" style="padding: 1px 4px;"><i class="fa fa-fw fa-plus-circle"></i>Add Syllabus</button>
+					</div>
 				  </ul>
-				
 				  <div class="tab-content">
-				    <div id="syllabus_viewMenu" class="tab-pane fade in active"  style="overflow:auto;">
+				    <div id="view_eBook_cont" class="tab-pane fade in active"  style="overflow:auto;">
 				      <table id="syllabus_table" class="table responsive  table-striped table-bordered" cellspacing="0" width="100%">
 							        <thead>
 							            <tr>
-							                <th>Sub Id</th>
-							                <th>Sub Name</th>
+							                <th>{{eBookType}} Id</th>
+							                <th>{{eBookType}} Name</th>
 							                <th>Branch Name</th>
 							                <th>Date</th>
 							                <th>Action</th>
@@ -122,8 +137,9 @@ html,body{
 							        		<td>01/04/2017</td>
 							        		<th>
 							        			<button class="btn btn-primary" style="padding: 1px 4px;">Edit</button>
-							        			<button class="btn btn-success" style="padding: 1px 4px;"><i class="fa fa-fw fa-plus-circle"></i></button>
-							        			<button class="btn btn-danger" style="padding: 1px 4px;"><i class="fa fa-fw fa-minus-circle"></i></button>
+							        			<button class="btn btn-danger" style="padding: 1px 4px;">Delete</button>
+							        			<!-- <button class="btn btn-success" style="padding: 1px 4px;"><i class="fa fa-fw fa-plus-circle"></i></button>
+							        			<button class="btn btn-danger" style="padding: 1px 4px;"><i class="fa fa-fw fa-minus-circle"></i></button> -->
 							        		</th>
 							        	</tr>
 							        	<tr>
@@ -151,52 +167,70 @@ html,body{
 							        </tbody>
 							      </table>
 				    </div>
-				    <div id="syllabus_editMenu" class="tab-pane fade">
-				      <h3>Menu 1</h3>
-				      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+				    <div id="edit_EBook_cont" class="tab-pane fade">
+				      <div class="row">
+          <div class="col-md-2 col-lg-2"></div>
+            <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
+            <div>
+              <div class="form-group">
+                <label>SYLLABUS</label>
+                <select ng-model="currentEBook.syllabus" class="form-control select2" style="width: 100%;">
+                  <option value="" selected="selected">select syllabus</option>
+                  <option>CMC/NEET</option>
+                  <option>NEET</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>BRANCH</label>
+                <select ng-model="currentEBook.branch" class="form-control select2" style="width: 100%;">
+                  <option value="" selected="selected">select branch</option>
+                  <option>Ranipet</option>
+                  <option>Gudiyatham</option>
+                  <option>Vellore</option>
+                  <option>TVL</option>
+                  <option>Tirupathur</option>
+                </select>
+              </div>
+              <div class="form-group">
+                 <label for="material_id">{{eBookType.toUpperCase()}} ID</label>
+                 <input type="text" ng-model="currentEBook.eBookId" class="form-control" id="material_id" placeholder="{{eBookType}} id">
+               </div>
+               <div class="form-group">
+                 <label for="material_name">{{eBookType.toUpperCase()}} NAME</label>
+                 <input type="text" ng-model="currentEBook.eBookName" class="form-control" id="material_name" placeholder="{{eBookType}} name">
+               </div>
+               <div class="form-group">
+                <label>LANGUAGE</label>
+                <select ng-model="currentEBook.language" class="form-control select2" style="width: 100%;">
+                  <option value="" selected="selected">Select Language</option>
+                  <option value="english">English</option>
+                  <option value="tamil">Tamil</option>
+                </select>
+              </div>
+               <div ng-if="eBookType=='material'" class="form-group">
+                 <label for="material_date">Date</label>
+                 <input ng-model="currentEBook.dateToShow" type="date" class="form-control" id="material_date" placeholder="Select Date">
+               </div>
+               <div class="form-group">
+                 <label for="material_fileUpload">Upload File</label>
+                 <div class="fileinput fileinput-new" data-provides="fileinput">
+				    <span class="btn btn-default btn-file"><span>Choose file</span><input accept="application/pdf" download="{{currentEBook.origFileName}}" type="file" onchange="readFile(event)" /></span>
+				    <span class="fileinput-filename"></span><span class="fileinput-new">{{currentEBook.origFileName}}</span>
+				    <a href="{{currentEBook.fileBase64}}" onclick="removeUnsafe(this);">click to download</a>
+				</div>
+               </div>
+               <div class="form-group pull-right col-lg-8 col-md-8 col-xs-9 col-sm-8">
+               	 <button ng-click="uploadEBook(currentEBook);" class="btn btn-primary"><i class="fa fa-fw fa-thumbs-o-up"></i>Submit</button>
+               </div>
+          </div>
 				    </div>
 				    
 				  </div>
 				</div>
             </div>
-            <!-- /.col -->
-            <!-- <div class="col-md-6">
-              <div class="form-group">
-                <label>Multiple</label>
-                <select class="form-control select2" multiple="multiple" data-placeholder="Select a State" style="width: 100%;">
-                  <option>Alabama</option>
-                  <option>Alaska</option>
-                  <option>California</option>
-                  <option>Delaware</option>
-                  <option>Tennessee</option>
-                  <option>Texas</option>
-                  <option>Washington</option>
-                </select>
-              </div>
-              /.form-group
-              <div class="form-group">
-                <label>Disabled Result</label>
-                <select class="form-control select2" style="width: 100%;">
-                  <option selected="selected">Alabama</option>
-                  <option>Alaska</option>
-                  <option disabled="disabled">California (disabled)</option>
-                  <option>Delaware</option>
-                  <option>Tennessee</option>
-                  <option>Texas</option>
-                  <option>Washington</option>
-                </select>
-              </div>
-              /.form-group
-            </div> -->
-            <!-- /.col -->
           </div>
           <!-- /.row -->
         </div>
-        <!-- /.box-body -->
-        <!-- <div class="box-footer">
-          Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about
-          the plugin.
-        </div> -->
       </div>
       </section>
 	</div>
@@ -207,8 +241,73 @@ html,body{
 <script src="../../plugins/select2/select2.full.js"></script>
 <script src="../../plugins/datatables/js/jquery.dataTables.js"></script>
 <script src="../../plugins/datatables/js/dataTables.bootstrap.min.js"></script>
+<script src="../../plugins/angular/angular.min.js"></script>
+<script src="../../plugins/angular/angular-filter.js"></script>
 <script src="../../plugins/adminLTE/js/app.js"></script>
 <script>
+var eBookApp=angular.module('eBook-app',['angular.filter']);
+var pageScope=null;
+var eBookCtrl=eBookApp.controller('eBook-ctrl',function($scope, $compile){
+	pageScope=$scope;
+	$scope.getEBookType=function(){
+		var url=window.location.href;
+		var queryParam=url.substring(url.indexOf("?")+1);
+		queryParam=queryParam.split('&');
+		$.each(queryParam,function(paramIndex,paramVal){
+			var key=paramVal.split('=')[0];
+			var val=paramVal.split('=')[1];
+			if(key=='eBookType'){
+				pageScope['eBookType']=val;
+				return false;
+			}
+		});
+	};
+	$scope.addEBook=function(){
+		//var eBookType=pageScope.eBookType;
+		pageScope.uploadType='new';
+		pageScope.currentEBook={};
+		currentEBook=pageScope.currentEBook;
+		currentEBook.eBookType=pageScope['eBookType'];
+		$('#editEBook').click();
+	};
+	$scope.editEBook=function(currentEBook){
+		//var eBookType=pageScope.eBookType;
+		pageScope.uploadType='edit';
+		pageScope.currentEBook=currentEBook;
+		$('#editEBook').click();
+	};
+	$scope.uploadEBook=function(currentEBook){
+		
+	};
+	// declerations
+	$scope.getEBookType();
+	
+});
+
+function readFile (event) {
+    var input = event.target;
+    var reader = new FileReader();
+    reader.onload = function (event) {
+        var text = event.target.result;
+        var node = document.getElementById('output');
+        //node.innerText = text;
+        currentEBook.fileBase64='data:application/pdf;base64,'+btoa(text);
+        pageScope.$digest();
+    };
+    var origFileName=input.value;
+    origFileName=(origFileName.split('\\')[origFileName.split('\\').length-1]);
+    currentEBook.origFileName=origFileName;
+    //$('[type="file"]').val().split('\\')[$('[type="file"]').val().split('\\').length-1]
+    reader.readAsBinaryString(input.files[0]);
+};
+
+function removeUnsafe(elem){
+	if(elem.href.indexOf('unsafe:')!=-1){
+		$(elem).attr('href',$(elem).attr('href').replace('unsafe:',''));
+		$(elem).click();
+	}
+}
+
 $(document).ready(function(){
 	$("select").select2();
 	$('#syllabus_table').DataTable({responsive: true});
