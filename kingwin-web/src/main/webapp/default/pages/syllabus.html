@@ -101,11 +101,11 @@ html,body{
             	<div class="container" style="padding:0%;width: 100%;">
 				  <!-- <h2>Dynamic Tabs</h2> -->
 				  <ul class="nav nav-tabs">
-				    <li class="active"><a data-toggle="tab" href="#view_eBook_cont">View Syllabus</a></li>
-				    <li><a data-toggle="tab" id="editEBook" href="#edit_EBook_cont">Create/Edit Syllabus</a></li>
+				    <li class="active"><a id="viewEBook" data-toggle="tab" href="#view_eBook_cont">View Syllabus</a></li>
+				    <li><a data-toggle="tab" id="editEBook" href="#edit_EBook_cont">Edit {{eBookType}}</a></li>
 				    <div class="col-md-5 col-lg-5 add-button-kingweb"></div>
 				    <div class="col-md-2 col-lg-2 col-xs-2" style="margin-left: -4%;margin-top: 2%;">
-						<button class="btn btn-success" ng-click="addEBook();" style="padding: 1px 4px;"><i class="fa fa-fw fa-plus-circle"></i>Add Syllabus</button>
+						<button class="btn btn-success" ng-click="addEBook();" style="padding: 1px 4px;"><i class="fa fa-fw fa-plus-circle"></i>Add {{eBookType}}</button>
 					</div>
 				  </ul>
 				  <div class="tab-content">
@@ -130,19 +130,21 @@ html,body{
 							            </tr>
 							        </tfoot> -->
 							        <tbody>
-							        	<tr>
-							        		<td>Sub Id1</td>
-							        		<td>Sub Name1</td>
-							        		<td>Branch Name1</td>
-							        		<td>01/04/2017</td>
-							        		<th>
-							        			<button class="btn btn-primary" style="padding: 1px 4px;">Edit</button>
+							        	<tr ng-repeat="eBookObj in eBookList">
+							        		<td>{{eBookObj.eBookId}}</td>
+							        		<td>{{eBookObj.eBookName}}</td>
+							        		<td>{{eBookObj.branch}}</td>
+							        		<td >{{eBookObj.dateToShow!=undefined ? eBookObj.dateToShow : '--'}}</td>
+							        		<td>
+							        			<button ng-click="editEBook(eBookObj)" class="btn btn-primary" style="padding: 1px 4px;">Edit</button>
 							        			<button class="btn btn-danger" style="padding: 1px 4px;">Delete</button>
+							        			<div class="col-md-4"><a class="" ng-href="{{'data:application/pdf;base64,'+eBookObj.fileBase64}}"  onclick="removeUnsafe(this);" ><img width="40" height="40" class="img img-responsive" src="../../images/pdf.png" alt="Download PDF" ></a></div>
+							        			
 							        			<!-- <button class="btn btn-success" style="padding: 1px 4px;"><i class="fa fa-fw fa-plus-circle"></i></button>
 							        			<button class="btn btn-danger" style="padding: 1px 4px;"><i class="fa fa-fw fa-minus-circle"></i></button> -->
-							        		</th>
+							        		</td>
 							        	</tr>
-							        	<tr>
+							        	<!-- <tr>
 							        		<td>Sub Id2</td>
 							        		<td>Sub Name2</td>
 							        		<td>Branch Name2</td>
@@ -163,7 +165,7 @@ html,body{
 							        			<button class="btn btn-success" style="padding: 1px 4px;"><i class="fa fa-fw fa-plus-circle"></i></button>
 							        			<button class="btn btn-danger" style="padding: 1px 4px;"><i class="fa fa-fw fa-minus-circle"></i></button>
 							        		</th>
-							        	</tr>
+							        	</tr> -->
 							        </tbody>
 							      </table>
 				    </div>
@@ -173,7 +175,7 @@ html,body{
             <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
             <div>
               <div class="form-group">
-                <label>SYLLABUS</label>
+                <label>SYLLABUS<i style="color:red;">*</i></label>
                 <select ng-model="currentEBook.syllabus" class="form-control select2" style="width: 100%;">
                   <option value="" selected="selected">select syllabus</option>
                   <option>CMC/NEET</option>
@@ -181,26 +183,22 @@ html,body{
                 </select>
               </div>
               <div class="form-group">
-                <label>BRANCH</label>
+                <label>BRANCH<i style="color:red;">*</i></label>
                 <select ng-model="currentEBook.branch" class="form-control select2" style="width: 100%;">
                   <option value="" selected="selected">select branch</option>
-                  <option>Ranipet</option>
-                  <option>Gudiyatham</option>
-                  <option>Vellore</option>
-                  <option>TVL</option>
-                  <option>Tirupathur</option>
+                  <option ng-if="branch!='admin' && branch!='all'" value="{{branch}}" ng-repeat="branch in branches">{{branch.toUpperCase()}}</option>
                 </select>
               </div>
               <div class="form-group">
-                 <label for="material_id">{{eBookType.toUpperCase()}} ID</label>
+                 <label for="material_id">{{eBookType.toUpperCase()}} ID<i style="color:red;">*</i></label>
                  <input type="text" ng-model="currentEBook.eBookId" class="form-control" id="material_id" placeholder="{{eBookType}} id">
                </div>
                <div class="form-group">
-                 <label for="material_name">{{eBookType.toUpperCase()}} NAME</label>
+                 <label for="material_name">{{eBookType.toUpperCase()}} NAME <i style="color:red;">*</i></label>
                  <input type="text" ng-model="currentEBook.eBookName" class="form-control" id="material_name" placeholder="{{eBookType}} name">
                </div>
-               <div class="form-group">
-                <label>LANGUAGE</label>
+               <div ng-if="eBookType=='material'" class="form-group">
+                <label>LANGUAGE<i style="color:red;">*</i></label>
                 <select ng-model="currentEBook.language" class="form-control select2" style="width: 100%;">
                   <option value="" selected="selected">Select Language</option>
                   <option value="english">English</option>
@@ -208,15 +206,15 @@ html,body{
                 </select>
               </div>
                <div ng-if="eBookType=='material'" class="form-group">
-                 <label for="material_date">Date</label>
+                 <label for="material_date">Date<i style="color:red;">*</i></label>
                  <input ng-model="currentEBook.dateToShow" type="date" class="form-control" id="material_date" placeholder="Select Date">
                </div>
                <div class="form-group">
-                 <label for="material_fileUpload">Upload File</label>
+                 <label for="material_fileUpload">Upload File <i style="color:red;">*</i></label>
                  <div class="fileinput fileinput-new" data-provides="fileinput">
-				    <span class="btn btn-default btn-file"><span>Choose file</span><input accept="application/pdf" download="{{currentEBook.origFileName}}" type="file" onchange="readFile(event)" /></span>
+				    <span class="btn btn-default btn-file"><span>Choose file</span><input accept="application/pdf"  type="file" onchange="readFile(event)" /></span>
 				    <span class="fileinput-filename"></span><span class="fileinput-new">{{currentEBook.origFileName}}</span>
-				    <a href="{{currentEBook.fileBase64}}" onclick="removeUnsafe(this);">click to download</a>
+				    <a href="data:application/pdf;base64,{{currentEBook.fileBase64}}" download="{{currentEBook.origFileName}}" onclick="removeUnsafe(this);">click to download</a>
 				</div>
                </div>
                <div class="form-group pull-right col-lg-8 col-md-8 col-xs-9 col-sm-8">
@@ -244,11 +242,18 @@ html,body{
 <script src="../../plugins/angular/angular.min.js"></script>
 <script src="../../plugins/angular/angular-filter.js"></script>
 <script src="../../plugins/adminLTE/js/app.js"></script>
+<script src="../../js/com.js"></script>
 <script>
 var eBookApp=angular.module('eBook-app',['angular.filter']);
 var pageScope=null;
+eBookApp.config(function ($compileProvider) {
+	//alert();
+	$compileProvider.imgSrcSanitizationWhitelist(/^\s*(https|ftp|mailto|file|tel|data)/);
+});
 var eBookCtrl=eBookApp.controller('eBook-ctrl',function($scope, $compile){
 	pageScope=$scope;
+	pageScope.serviceEndPoint=serviceEndPoint;
+	
 	$scope.getEBookType=function(){
 		var url=window.location.href;
 		var queryParam=url.substring(url.indexOf("?")+1);
@@ -257,10 +262,24 @@ var eBookCtrl=eBookApp.controller('eBook-ctrl',function($scope, $compile){
 			var key=paramVal.split('=')[0];
 			var val=paramVal.split('=')[1];
 			if(key=='eBookType'){
-				pageScope['eBookType']=val;
+				if(val=="Q"){
+					pageScope['eBookType']="Q&A";
+				}
+				else{
+					pageScope['eBookType']=val;					
+				}
 				return false;
 			}
 		});
+	};
+	$scope.getEBookList=function(){
+		var eBookType=pageScope['eBookType'];
+		var options={};
+		options.apiPath=serviceEndPoint+'getEbookList?eBookType='+eBookType;
+		options.methodType='GET';
+		options.inputType='application/json';
+		options.data="";
+		doServiceCall(options,getEBookList_callback);
 	};
 	$scope.addEBook=function(){
 		//var eBookType=pageScope.eBookType;
@@ -268,30 +287,75 @@ var eBookCtrl=eBookApp.controller('eBook-ctrl',function($scope, $compile){
 		pageScope.currentEBook={};
 		currentEBook=pageScope.currentEBook;
 		currentEBook.eBookType=pageScope['eBookType'];
+		$('#editEBook').css('pointer-events','all');
 		$('#editEBook').click();
+		$('#editEBook').css('pointer-events','none');
 	};
 	$scope.editEBook=function(currentEBook){
 		//var eBookType=pageScope.eBookType;
 		pageScope.uploadType='edit';
 		pageScope.currentEBook=currentEBook;
+		$('#editEBook').css('pointer-events','all');
 		$('#editEBook').click();
+		$('#editEBook').css('pointer-events','none');
 	};
 	$scope.uploadEBook=function(currentEBook){
-		
+		//$compile(angular.element('select'))($scope);
+		//$('select').select2();
+		var errorFlag=verifyUpload(currentEBook);
+		if(errorFlag){
+			return false;
+		}
+		var options={};
+		options.apiPath=serviceEndPoint+'uploadEBook';
+		if(pageScope.uploadType=='edit'){
+			options.methodType="PUT";	
+		}
+		else{
+			options.methodType="POST";
+		}
+		//options.methodType='GET';
+		options.inputType='application/json';
+		options.data=currentEBook;
+		doServiceCall(options,uploadEBook_callback);
+	};
+	$scope.getBranches=function(){
+		var options={};
+		options.apiPath=serviceEndPoint+'getBranches';
+		options.methodType='GET';
+		options.inputType='application/json';
+		options.data="";
+		doServiceCall(options,getBranches_callback);
 	};
 	// declerations
 	$scope.getEBookType();
-	
+	$scope.getEBookList();
+	$scope.getBranches();
 });
+
+function getBranches_callback (data,callbackData){
+	pageScope.branches=data;
+	pageScope.$digest();
+};
+function uploadEBook_callback(data,callbackData){
+	pageScope.$digest();
+	$('#viewEBook').click();
+}
+function getEBookList_callback(data,callbackData){
+	pageScope.eBookList=data;
+	pageScope.$digest();
+	$('#syllabus_table').DataTable({"destroy": true,"responsive": true});
+}
 
 function readFile (event) {
     var input = event.target;
     var reader = new FileReader();
+    var currentEBook=pageScope.currentEBook;
     reader.onload = function (event) {
         var text = event.target.result;
         var node = document.getElementById('output');
         //node.innerText = text;
-        currentEBook.fileBase64='data:application/pdf;base64,'+btoa(text);
+        currentEBook.fileBase64=btoa(text);
         pageScope.$digest();
     };
     var origFileName=input.value;
@@ -307,10 +371,55 @@ function removeUnsafe(elem){
 		$(elem).click();
 	}
 }
+function setSyllabusView(){
+	$('#editEBook').css('pointer-events','none');
+	$('#viewEBook').click();
+}
+function verifyUpload(currentEBook){
+	var errorFlag=false;
+	if(currentEBook.syllabus==undefined || currentEBook.syllabus==""){
+		$('[ng-model="currentEBook.syllabus"]').parent().find('span.select2-selection').addClass('input-error');
+		errorFlag=true;
+	}else{
+		$('[ng-model="currentEBook.syllabus"]').parent().find('span.select2-selection').removeClass('input-error');
+	}
+	
+	if(currentEBook.branch==undefined || currentEBook.branch==""){
+		$('[ng-model="currentEBook.branch"]').parent().find('span.select2-selection').addClass('input-error');
+		errorFlag=true;
+	}else{
+		$('[ng-model="currentEBook.branch"]').parent().find('span.select2-selection').removeClass('input-error');
+	}
+	
+	if(currentEBook.eBookId==undefined || currentEBook.eBookId==""){
+		$('[ng-model="currentEBook.eBookId"]').addClass('input-error');
+		errorFlag=true;
+	}else{
+		$('[ng-model="currentEBook.eBookId"]').removeClass('input-error');
+	}
+	
+	if(currentEBook.eBookName==undefined || currentEBook.eBookName==""){
+		$('[ng-model="currentEBook.eBookName"]').addClass('input-error');
+		errorFlag=true;
+	}else{
+		$('[ng-model="currentEBook.eBookName"]').removeClass('input-error');
+	}
+	
+	if(currentEBook.origFileName==undefined || currentEBook.origFileName==""){
+		alert('please upload file');
+		errorFlag=true;
+	}
+	var eBookType=pageScope.currentEBook.eBookType;
+	if(!errorFlag){
+		$('input-error').removeClass('input-error');
+	}
+	return errorFlag;
+}
 
 $(document).ready(function(){
-	$("select").select2();
-	$('#syllabus_table').DataTable({responsive: true});
+	//$("select").select2();
+	//$('#syllabus_table').DataTable({"destroy": true,"responsive": true});
+	$('#editEBook').css('pointer-events','none');
 });
 </script>
 </body>
