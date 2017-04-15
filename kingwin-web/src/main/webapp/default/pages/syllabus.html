@@ -117,7 +117,7 @@ html,body{
 							                <th>{{eBookType}} Name</th>
 							                <th>Branch Name</th>
 							                <th>Date</th>
-							                <th>Action</th>
+							                <th class="col-md-8 col-lg-8">Action</th>
 							            </tr>
 							        </thead>
 							        <!-- <tfoot>
@@ -136,10 +136,13 @@ html,body{
 							        		<td>{{eBookObj.branch}}</td>
 							        		<td >{{eBookObj.dateToShow!=undefined ? eBookObj.dateToShow : '--'}}</td>
 							        		<td>
-							        			<button ng-click="editEBook(eBookObj)" class="btn btn-primary" style="padding: 1px 4px;">Edit</button>
-							        			<button class="btn btn-danger" style="padding: 1px 4px;">Delete</button>
-							        			<div class="col-md-4"><a class="" ng-href="{{'data:application/pdf;base64,'+eBookObj.fileBase64}}"  onclick="removeUnsafe(this);" ><img width="40" height="40" class="img img-responsive" src="../../images/pdf.png" alt="Download PDF" ></a></div>
-							        			
+							        			<div class="col-md-8 col-xs-8 col-sm-8 col-lg-8" style="padding:0px;">
+								        			<button ng-click="editEBook(eBookObj);" class="btn btn-primary col-md-6 col-xs-12 col-sm-6 col-lg-6" style="padding: 1px 4px;">Edit</button>
+								        			<button class="btn btn-danger col-md-6 col-xs-12 col-sm-6 col-lg-6" style="padding: 1px 4px;">Delete</button>
+								        		</div>
+								        		<div class="col-md-4 col-xs-4 col-sm-4 col-lg-4" style="padding: 0px;">
+							        			<a class="" ng-href="{{'data:application/pdf;base64,'+eBookObj.fileBase64}}"  onclick="removeUnsafe(this);" ><img  class="img img-responsive" src="../../images/pdf.png" alt="Download PDF" ></a>
+							        			</div>
 							        			<!-- <button class="btn btn-success" style="padding: 1px 4px;"><i class="fa fa-fw fa-plus-circle"></i></button>
 							        			<button class="btn btn-danger" style="padding: 1px 4px;"><i class="fa fa-fw fa-minus-circle"></i></button> -->
 							        		</td>
