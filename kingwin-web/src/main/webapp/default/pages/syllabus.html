@@ -399,17 +399,17 @@ function validateUpload(currentEBookObj){
 	var currentEBook=angular.copy(currentEBookObj);
 	var errorFlag=false;
 	if(currentEBook.syllabus==undefined || currentEBook.syllabus==""){
-		$('[ng-model="currentEBook.syllabus"]').parent().find('span.select2-selection').addClass('input-error');
+		$('[ng-model="currentEBook.syllabus"]').addClass('input-error');
 		errorFlag=true;
 	}else{
-		$('[ng-model="currentEBook.syllabus"]').parent().find('span.select2-selection').removeClass('input-error');
+		$('[ng-model="currentEBook.syllabus"]').removeClass('input-error');
 	}
 	
 	if(currentEBook.branch==undefined || currentEBook.branch==""){
-		$('[ng-model="currentEBook.branch"]').parent().find('span.select2-selection').addClass('input-error');
+		$('[ng-model="currentEBook.branch"]').addClass('input-error');
 		errorFlag=true;
 	}else{
-		$('[ng-model="currentEBook.branch"]').parent().find('span.select2-selection').removeClass('input-error');
+		$('[ng-model="currentEBook.branch"]').removeClass('input-error');
 	}
 	
 	if(currentEBook.eBookId==undefined || currentEBook.eBookId==""){
