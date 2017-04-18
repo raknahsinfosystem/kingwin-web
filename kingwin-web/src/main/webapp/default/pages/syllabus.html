@@ -143,9 +143,9 @@ html,body{
 								        			<button ng-click="editEBook(eBookObj);" class="btn btn-primary col-md-6 col-xs-12 col-sm-6 col-lg-6" style="padding: 1px 4px;">Edit</button>
 								        			<button ng-click="deleteEBook(eBookObj.id);" class="btn btn-danger col-md-6 col-xs-12 col-sm-6 col-lg-6" style="padding: 1px 4px;">Delete</button>
 								        		</div>
-								        		<div class="col-md-4 col-xs-4 col-sm-4 col-lg-4" style="padding: 0px;">
+								        		<!-- <div class="col-md-4 col-xs-4 col-sm-4 col-lg-4" style="padding: 0px;">
 							        			<a class="" ng-href="{{'data:application/pdf;base64,'+eBookObj.fileBase64}}"  onclick="removeUnsafe(this);" ><img  class="img img-responsive" src="../../images/pdf.png" alt="Download PDF" ></a>
-							        			</div>
+							        			</div> -->
 							        			<!-- <button class="btn btn-success" style="padding: 1px 4px;"><i class="fa fa-fw fa-plus-circle"></i></button>
 							        			<button class="btn btn-danger" style="padding: 1px 4px;"><i class="fa fa-fw fa-minus-circle"></i></button> -->
 							        		</td>
@@ -336,7 +336,7 @@ function uploadEBook_callback(data,callbackData){
 	}
 	pageScope.$digest();
 	if(callbackData.uploadType=='new'){
-		$('#syllabus_table').DataTable({"destroy": true,"responsive": true});
+		//$('#syllabus_table').DataTable({"destroy": true,"responsive": true});
 	}
 	$('#viewEBook').click();
 }
@@ -349,7 +349,7 @@ function getEBookList_callback(data,callbackData){
 	}
 	pageScope.eBookList=data;
 	pageScope.$digest();
-	$('#syllabus_table').DataTable({"destroy": true,"responsive": true});
+	//$('#syllabus_table').DataTable({"destroy": true,"responsive": true});
 }
 function deleteEBook_callback(data,callbackData){
 	if(data){
@@ -362,8 +362,9 @@ function deleteEBook_callback(data,callbackData){
 				return false;
 			}
 		});
+		//$('#syllabus_table').DataTable({"destroy": true,"responsive": true});
 		pageScope.$digest();
-		$('#syllabus_table').DataTable({"destroy": true,"responsive": true});
+		
 	}
 }
 
@@ -457,7 +458,7 @@ function validateUpload(currentEBookObj){
 
 $(document).ready(function(){
 	//$("select").select2();
-	//$('#syllabus_table').DataTable({"destroy": true,"responsive": true});
+	$('#syllabus_table').DataTable({"destroy": true,"responsive": true});
 	$('#editEBook').css('pointer-events','none');
 });
 </script>

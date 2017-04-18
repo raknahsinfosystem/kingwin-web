@@ -21,3 +21,6 @@
 .alert.alert-success{
 	background-color: #743d77 !important;
 }
+section.content{
+	display: list-item;
+}
