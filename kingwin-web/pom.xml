@@ -5,7 +5,7 @@
   <groupId>com.raknahsinfosystem.webzion</groupId>
   <artifactId>kingwin-web</artifactId>
   <version>0.0.1-RELEASE</version>
-  <packaging>jar</packaging>
+  <packaging>war</packaging>
   
   <name>sample-springboot</name>
   <url>http://maven.apache.org</url>

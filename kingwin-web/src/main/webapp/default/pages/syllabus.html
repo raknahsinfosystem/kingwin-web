@@ -58,6 +58,7 @@ html,body{
 }
 .btn{
 	background-color: #743d77 !important;
+	color: white !important;
 }
 /* body *{
 	color : white;
@@ -108,7 +109,7 @@ html,body{
 				    <li><a data-toggle="tab" id="editEBook" href="#edit_EBook_cont">Edit {{eBookType}}</a></li>
 				    <div class="col-md-5 col-lg-5 add-button-kingweb"></div>
 				    <div class="col-md-2 col-lg-2 col-xs-2" style="margin-left: -4%;margin-top: 2%;">
-						<button class="btn btn-success" ng-click="addEBook();" style="padding: 1px 4px;"><i class="fa fa-fw fa-plus-circle"></i>Add {{eBookType}}</button>
+						<button class="btn btn-success" ng-click="addEBook();" style="padding: 1px 4px;" ng-disabled="userType!='admin'"><i class="fa fa-fw fa-plus-circle"></i>Add {{eBookType}}</button>
 					</div>
 				  </ul>
 				  <div class="tab-content">
@@ -139,9 +140,10 @@ html,body{
 							        		<td>{{eBookObj.branch}}</td>
 							        		<td >{{eBookObj.dateToShow!=undefined ? eBookObj.dateToShow.getDate()+'-'+(eBookObj.dateToShow.getMonth()+1)+'-'+eBookObj.dateToShow.getFullYear() : '--'}}</td>
 							        		<td>
-							        			<div class="col-md-8 col-xs-8 col-sm-8 col-lg-8" style="padding:0px;">
-								        			<button ng-click="editEBook(eBookObj);" class="btn btn-primary col-md-6 col-xs-12 col-sm-6 col-lg-6" style="padding: 1px 4px;">Edit</button>
-								        			<button ng-click="deleteEBook(eBookObj.id);" class="btn btn-danger col-md-6 col-xs-12 col-sm-6 col-lg-6" style="padding: 1px 4px;">Delete</button>
+							        			<div class="col-md-8 col-xs-12 col-sm-8 col-lg-8 cust-width-181" style="padding:0px;">
+							        				<button  ng-click="viewEBook(eBookObj);" class="btn bg-green col-md-6 col-xs-6 col-sm-6 col-lg-6" style="background-color :#00a65a !important;">View</button>
+								        			<button ng-show="userType=='admin'" ng-click="editEBook(eBookObj);" class="btn btn-primary col-md-6 col-xs-6 col-sm-6 col-lg-6" style="">Edit</button>
+								        			<button ng-show="userType=='admin'" ng-click="deleteEBook(eBookObj.id);" class="btn btn-danger col-md-6 col-xs-6 col-sm-6 col-lg-6" style="">Delete</button>
 								        		</div>
 								        		<!-- <div class="col-md-4 col-xs-4 col-sm-4 col-lg-4" style="padding: 0px;">
 							        			<a class="" ng-href="{{'data:application/pdf;base64,'+eBookObj.fileBase64}}"  onclick="removeUnsafe(this);" ><img  class="img img-responsive" src="../../images/pdf.png" alt="Download PDF" ></a>
@@ -181,7 +183,7 @@ html,body{
                  <label for="material_name">{{eBookType.toUpperCase()}} NAME <i style="color:red;">*</i></label>
                  <input type="text" ng-model="currentEBook.eBookName" class="form-control" id="material_name" placeholder="{{eBookType}} name">
                </div>
-               <div ng-if="eBookType=='material'" class="form-group">
+               <div ng-if="eBookType!='syllabus'" class="form-group">
                 <label>LANGUAGE<i style="color:red;">*</i></label>
                 <select ng-model="currentEBook.language" class="form-control select2" style="width: 100%;">
                   <option value="" selected="selected">Select Language</option>
@@ -189,7 +191,7 @@ html,body{
                   <option value="tamil">Tamil</option>
                 </select>
               </div>
-               <div ng-if="eBookType=='material'" class="form-group">
+               <div ng-if="eBookType!='syllabus'" class="form-group">
                  <label for="material_date">Date<i style="color:red;">*</i></label>
                  <input ng-model="currentEBook.dateToShow" type="date" class="form-control" id="material_date" placeholder="Select Date">
                </div>
@@ -225,6 +227,7 @@ html,body{
 <script src="../../plugins/datatables/js/dataTables.bootstrap.min.js"></script>
 <script src="../../plugins/angular/angular.min.js"></script>
 <script src="../../plugins/angular/angular-filter.js"></script>
+<script src="../../plugins/notify/Notify.js"></script>
 <script src="../../plugins/adminLTE/js/app.js"></script>
 <script src="../../js/com.js"></script>
 <script>
@@ -283,6 +286,15 @@ var eBookCtrl=eBookApp.controller('eBook-ctrl',function($scope, $compile){
 		$('#editEBook').click();
 		$('#editEBook').css('pointer-events','none');
 	};
+	$scope.viewEBook=function(eBookObj){
+		var bookId=eBookObj.id;
+		var options={};
+		options.apiPath=serviceEndPoint+'getEbook?id='+bookId;
+		options.methodType='GET';
+		options.inputType='application/json';
+		options.data="";
+		doServiceCall(options,viewEBook_callback,{eBook:eBookObj});
+	};
 	$scope.uploadEBook=function(currentEBook){
 		//$compile(angular.element('select'))($scope);
 		//$('select').select2();
@@ -337,6 +349,10 @@ function uploadEBook_callback(data,callbackData){
 	pageScope.$digest();
 	if(callbackData.uploadType=='new'){
 		//$('#syllabus_table').DataTable({"destroy": true,"responsive": true});
+		Notify('new '+callbackData.currentEBook.eBookType+' added successfully', null, null, 'success');
+	}
+	else{
+		Notify(callbackData.currentEBook.eBookType+' added successfully', null, null, 'success');
 	}
 	$('#viewEBook').click();
 }
@@ -366,6 +382,16 @@ function deleteEBook_callback(data,callbackData){
 		pageScope.$digest();
 		
 	}
+}
+
+function viewEBook_callback(data,callbackData){
+	if(data!=undefined && data.length>0){
+		$('#viewPDF_embed').attr('src','data:application/pdf;base64,'+data);
+		pageScope.viewEBookObj=callbackData.eBook;
+		pageScope.$digest();
+		$('#viewPDF_modal').modal('show');	
+	}
+	
 }
 
 function readFile (event) {
@@ -447,7 +473,7 @@ function validateUpload(currentEBookObj){
 	}
 	
 	if(currentEBook.origFileName==undefined || currentEBook.origFileName==""){
-		alert('please upload file');
+		Notify('please upload file', null, null, 'error');
 		errorFlag=true;
 	}
 	if(!errorFlag){
@@ -460,7 +486,46 @@ $(document).ready(function(){
 	//$("select").select2();
 	$('#syllabus_table').DataTable({"destroy": true,"responsive": true});
 	$('#editEBook').css('pointer-events','none');
+	/* if(window.location.href.indexOf('/login')==1){
+		initUserObj();
+		$.ajaxSetup({
+		    beforeSend: function (xhr)
+		    {
+		       xhr.setRequestHeader("userToken",);
+		    }
+		});
+	} */
 });
 </script>
+
+<div class="col-md-12">
+<!-- Modal -->
+  <div class="modal fade" id="viewPDF_modal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content popup-modal-box">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" >{{viewEBookObj.eBookName}}</h4>
+        </div>
+        <div class="modal-body">
+           <embed id="viewPDF_embed" width="100%" height="100%"   id="plugin"  type="application/pdf" internalinstanceid="5">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+<script>
+$('embed').mouseover(function(event){
+	
+});
+</script>
+
+<div id="notifications"></div>
 </body>
 </html>

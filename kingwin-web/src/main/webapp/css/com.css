@@ -24,3 +24,47 @@
 section.content{
 	display: list-item;
 }
+.bg-green{
+	    background-color :#00a65a !important;
+}
+@media(min-width:400px){
+	.cust-width-181{
+		width : 181%;
+	}
+}
+@media(min-width:700px){
+	.cust-width-181{
+		width : 100%;
+	}
+}
+.popup-modal-box{
+	box-shadow: 0px 0px 10px 6px #2b1b30;
+}
+#viewPDF_modal .modal-dialog {
+  width: 95%;
+  height: 100%;
+  margin: 2%;
+  padding: 0;
+}
+
+#viewPDF_modal .modal-content {
+  height: auto;
+  min-height: 100%;
+  border-radius: 0;
+}
+@media(min-width:400px){
+	embed{
+		min-height : 500px;
+	}
+}
+@media(min-width:700px){
+	embed{
+		min-height : 750px;
+	}
+}
+.alert{
+	position : fixed;
+}
+.pointer-none{
+	pointer-events:none;
+}
